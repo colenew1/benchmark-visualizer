@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benchmark Calculator | AmplifAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --orange: #F26A3E;
+      --orange-glow: rgba(242, 106, 62, 0.4);
+      --purple: #6B4C9A;
+      --purple-glow: rgba(107, 76, 154, 0.4);
+      --navy: #0d0d1a;
+      --navy-light: #1a1a2e;
+      --white: #ffffff;
+      --gray: #8888a0;
+    }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(242, 106, 62, 0.1);
+      border: 1px solid rgba(242, 106, 62, 0.3);
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 32px;
+    }
+
+    .badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    h1 {
+      font-size: 56px;
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 18px;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border: none;
+      border-radius: 50px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .back-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 20px 60px var(--orange-glow);
+    }
+
+    .back-btn svg {
+      width: 20px;
+      height: 20px;
+      transform: rotate(180deg);
+    }
+
+    /* Background orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: -200px;
+      right: -100px;
+    }
+
+    .orb-2 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      bottom: -200px;
+      left: -200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="container">
+    <div class="badge">Coming Soon</div>
+    <h1>Benchmark Calculator</h1>
+    <p>We're building something powerful. Our advanced benchmark calculator will help you dive deeper into your metrics and get personalized insights.</p>
+    <a href="index.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+      Back to Benchmarks
+    </a>
+  </div>
+</body>
+</html>
