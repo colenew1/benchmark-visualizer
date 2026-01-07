@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Industry Benchmarks | AmplifAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --orange: #F26A3E;
+      --orange-glow: rgba(242, 106, 62, 0.4);
+      --purple: #6B4C9A;
+      --purple-glow: rgba(107, 76, 154, 0.4);
+      --navy: #0d0d1a;
+      --navy-light: #1a1a2e;
+      --white: #ffffff;
+      --gray: #8888a0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* Smooth scroll container */
+    .smooth-scroll {
+      overflow: hidden;
+    }
+
+    /* Gradient Orbs - Background Graphics */
+    .gradient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 0;
+      transition: transform 0.5s ease-out, opacity 0.5s ease;
+    }
+
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+    }
+
+    .orb-2 {
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      top: 50%;
+      left: -400px;
+    }
+
+    .orb-3 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      bottom: -100px;
+      right: 10%;
+      opacity: 0.3;
+    }
+
+    /* Fixed Header */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(13, 13, 26, 0.9) 0%, transparent 100%);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--white);
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    .nav-cta {
+      padding: 12px 28px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-cta:hover {
+      background: var(--white);
+      color: var(--navy);
+      transform: scale(1.05);
+      box-shadow: 0 10px 40px rgba(255,255,255,0.2);
+    }
+
+    /* Sections */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(242, 106, 62, 0.1);
+      border: 1px solid rgba(242, 106, 62, 0.3);
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+    }
+
+    .hero-label::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .hero h1 {
+      font-size: clamp(56px, 12vw, 140px);
+      font-weight: 900;
+      line-height: 0.9;
+      margin-bottom: 32px;
+      letter-spacing: -3px;
+    }
+
+    .hero h1 .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(60px) rotateX(-15deg);
+      animation: heroLineIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero h1 .line:nth-child(1) { animation-delay: 0.3s; }
+    .hero h1 .line:nth-child(2) { animation-delay: 0.45s; }
+
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 50%, var(--orange) 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 8s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes heroLineIn {
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+
+    .hero-sub {
+      font-size: 20px;
+      color: var(--gray);
+      max-width: 500px;
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.7s;
+    }
+
+    .hero-sub strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.2s;
+    }
+
+    .scroll-indicator span {
+      font-size: 11px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .scroll-mouse {
+      width: 24px;
+      height: 40px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .scroll-mouse::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 2px;
+      animation: scrollDown 1.5s ease infinite;
+    }
+
+    @keyframes scrollDown {
+      0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+    }
+
+    /* Floating Stats - Hero Background */
+    .floating-stats {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .floating-stat {
+      position: absolute;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      opacity: 0;
+      animation: floatIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .floating-stat:nth-child(1) { top: 20%; left: 8%; animation-delay: 1s; }
+    .floating-stat:nth-child(2) { top: 30%; right: 10%; animation-delay: 1.2s; }
+    .floating-stat:nth-child(3) { bottom: 25%; left: 12%; animation-delay: 1.4s; }
+    .floating-stat:nth-child(4) { bottom: 30%; right: 8%; animation-delay: 1.6s; }
+
+    @keyframes floatIn {
+      to { opacity: 1; }
+    }
+
+    .floating-stat .stat-value {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--orange);
+    }
+
+    .floating-stat .stat-label {
+      font-size: 11px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Animated floating */
+    .floating-stat:nth-child(1) { animation: floatIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s, float1 6s ease-in-out infinite 2s; }
+    .floating-stat:nth-child(2) { animation: floatIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.2s, float2 7s ease-in-out infinite 2.2s; }
+    .floating-stat:nth-child(3) { animation: floatIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.4s, float3 8s ease-in-out infinite 2.4s; }
+    .floating-stat:nth-child(4) { animation: floatIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards 1.6s, float4 6s ease-in-out infinite 2.6s; }
+
+    @keyframes float1 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    @keyframes float2 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    @keyframes float3 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @keyframes float4 { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+
+    /* Big Number Section */
+    .big-number-section {
+      background: transparent;
+      position: relative;
+    }
+
+    .big-number-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .big-number-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .big-number {
+      text-align: center;
+      padding: 60px 40px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 32px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .big-number.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .big-number:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(242, 106, 62, 0.3);
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    .big-number::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange), var(--purple), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .big-number:hover::before {
+      opacity: 1;
+    }
+
+    .big-number .number {
+      font-size: clamp(72px, 10vw, 120px);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.4s ease;
+    }
+
+    .big-number:hover .number {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .big-number .label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray);
+      margin-top: 16px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    /* Metrics List */
+    .metrics-tracked {
+      margin-top: 80px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+    }
+
+    .metrics-tracked.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .metrics-tracked-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 24px;
+    }
+
+    .metrics-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .metric-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 28px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 50px;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+
+    .metric-chip.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .metric-chip:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--orange);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3), 0 0 30px var(--orange-glow);
+    }
+
+    .metric-chip-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      transition: all 0.4s ease;
+    }
+
+    .metric-chip:hover .metric-chip-icon {
+      transform: rotate(10deg) scale(1.1);
+      box-shadow: 0 5px 20px var(--orange-glow);
+    }
+
+    .metric-chip-content {
+      text-align: left;
+    }
+
+    .metric-chip-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+
+    .metric-chip-desc {
+      font-size: 11px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 640px) {
+      .metrics-chips {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .metric-chip {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
+
+    /* Industry Cards Section */
+    .industries-section {
+      padding: 180px 48px;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -2px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .section-header.visible h2 {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header p {
+      font-size: 18px;
+      color: var(--gray);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+    }
+
+    .section-header.visible p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .industry-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1400px;
+      width: 100%;
+    }
+
+    .industry-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 28px;
+      padding: 48px 32px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(80px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .industry-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .industry-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 0%, var(--orange-glow) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .industry-card:hover::before {
+      opacity: 1;
+    }
+
+    .industry-card:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--orange);
+      transform: translateY(-12px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4), 0 0 40px var(--orange-glow);
+    }
+
+    .industry-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .industry-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      transition: all 0.4s ease;
+    }
+
+    .industry-card:hover .industry-icon {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 10px 30px var(--orange-glow);
+    }
+
+    .industry-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .industry-card .company-count {
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    .industry-card .score-preview {
+      margin-top: 32px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .industry-card .avg-score {
+      font-size: 56px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.4s ease;
+    }
+
+    .industry-card:hover .avg-score {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .industry-card .avg-label {
+      font-size: 11px;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 4px;
+    }
+
+    /* Metrics Deep Dive */
+    .metrics-section {
+      padding: 180px 48px;
+      position: relative;
+    }
+
+    .metrics-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.015) 50%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .metrics-container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 80px;
+      padding: 80px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      opacity: 0;
+      transform: translateY(60px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .metric-row.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-info {
+      position: sticky;
+      top: 150px;
+      height: fit-content;
+    }
+
+    .metric-info h3 {
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .metric-info p {
+      font-size: 16px;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    .metric-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .metric-bar-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 80px;
+      gap: 24px;
+      align-items: center;
+      padding: 20px 24px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      transition: all 0.4s ease;
+    }
+
+    .metric-bar-row:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateX(8px);
+    }
+
+    .metric-bar-row .industry-name {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .metric-bar-track {
+      height: 16px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .metric-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--orange), var(--purple));
+      border-radius: 8px;
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .metric-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .metric-row.visible .metric-bar-fill {
+      transform: scaleX(1);
+    }
+
+    .metric-bar-row .score {
+      font-size: 24px;
+      font-weight: 900;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at 50% 50%, var(--orange-glow) 0%, transparent 60%);
+      opacity: 0.6;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(40px, 7vw, 80px);
+      font-weight: 900;
+      margin-bottom: 24px;
+      max-width: 900px;
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+
+    .cta-section p {
+      font-size: 20px;
+      color: var(--gray);
+      margin-bottom: 48px;
+      max-width: 500px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 56px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: 60px;
+      font-family: 'Lato', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .cta-btn:hover::before {
+      left: 100%;
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 20px 60px var(--orange-glow), 0 0 100px var(--orange-glow);
+    }
+
+    .cta-btn svg {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.4s ease;
+    }
+
+    .cta-btn:hover svg {
+      transform: translateX(6px);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn.primary {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      text-decoration: none;
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+
+    .cta-btn.secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--white);
+      box-shadow: 0 20px 60px rgba(255,255,255,0.1);
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--purple));
+      z-index: 1001;
+      transform-origin: left;
+      transform: scaleX(0);
+      box-shadow: 0 0 20px var(--orange-glow);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .big-number-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .industry-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .metric-row {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .metric-info {
+        position: relative;
+        top: 0;
+      }
+
+      .floating-stats {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      section {
+        padding: 100px 24px;
+      }
+
+      .nav {
+        padding: 16px 24px;
+      }
+
+      .industry-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-bar-row {
+        grid-template-columns: 1fr 60px;
+      }
+
+      .metric-bar-row .industry-name {
+        grid-column: 1 / -1;
+        margin-bottom: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <!-- Gradient Orbs -->
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+  <div class="gradient-orb orb-3"></div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="logo">amplif<span>AI</span></div>
+    <button class="nav-cta" onclick="window.open('https://www.amplifai.com/demo', '_blank')">Book a Demo</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="floating-stats">
+      <div class="floating-stat">
+        <div class="stat-value">93.3</div>
+        <div class="stat-label">Highest QA Score</div>
+      </div>
+      <div class="floating-stat">
+        <div class="stat-value">90.3</div>
+        <div class="stat-label">Top CSAT</div>
+      </div>
+      <div class="floating-stat">
+        <div class="stat-value">76.5</div>
+        <div class="stat-label">Best FCR</div>
+      </div>
+      <div class="floating-stat">
+        <div class="stat-value">10.9%</div>
+        <div class="stat-label">Lowest Transfer</div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-label">2025 Industry Benchmark Report</div>
+      <h1>
+        <span class="line">Know Where</span>
+        <span class="line gradient">You Stand</span>
+      </h1>
+      <p class="hero-sub">
+        Real performance data from <strong>30 companies</strong> across 4 industry verticals. See how you compare.
+      </p>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll to explore</span>
+      <div class="scroll-mouse"></div>
+    </div>
+  </section>
+
+  <!-- Big Numbers -->
+  <section class="big-number-section">
+    <div class="big-number-grid">
+      <div class="big-number" data-target="30">
+        <div class="number">0</div>
+        <div class="label">Companies Analyzed</div>
+      </div>
+      <div class="big-number" data-target="4">
+        <div class="number">0</div>
+        <div class="label">Industry Verticals</div>
+      </div>
+      <div class="big-number" data-target="5">
+        <div class="number">0</div>
+        <div class="label">Key Metrics</div>
+      </div>
+    </div>
+
+    <!-- Metrics Tracked -->
+    <div class="metrics-tracked">
+      <div class="metrics-tracked-label">Metrics Tracked</div>
+      <div class="metrics-chips">
+        <div class="metric-chip">
+          <div class="metric-chip-icon">QA</div>
+          <div class="metric-chip-content">
+            <div class="metric-chip-name">QA Score</div>
+            <div class="metric-chip-desc">Quality Assurance</div>
+          </div>
+        </div>
+        <div class="metric-chip">
+          <div class="metric-chip-icon">CS</div>
+          <div class="metric-chip-content">
+            <div class="metric-chip-name">CSAT</div>
+            <div class="metric-chip-desc">Customer Satisfaction</div>
+          </div>
+        </div>
+        <div class="metric-chip">
+          <div class="metric-chip-icon">NP</div>
+          <div class="metric-chip-content">
+            <div class="metric-chip-name">NPS</div>
+            <div class="metric-chip-desc">Net Promoter Score</div>
+          </div>
+        </div>
+        <div class="metric-chip">
+          <div class="metric-chip-icon">FC</div>
+          <div class="metric-chip-content">
+            <div class="metric-chip-name">FCR</div>
+            <div class="metric-chip-desc">First Contact Resolution</div>
+          </div>
+        </div>
+        <div class="metric-chip">
+          <div class="metric-chip-icon">TR</div>
+          <div class="metric-chip-content">
+            <div class="metric-chip-name">Transfer Rate</div>
+            <div class="metric-chip-desc">Call Transfers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="industries-section">
+    <div class="section-header">
+      <h2>Explore by Industry</h2>
+      <p>See how each vertical performs across key contact center metrics</p>
+    </div>
+    <div class="industry-cards">
+      <div class="industry-card" data-industry="Healthcare">
+        <div class="industry-card-content">
+          <div class="industry-icon">🏥</div>
+          <h3>Healthcare</h3>
+          <div class="company-count">6 companies</div>
+          <div class="score-preview">
+            <div class="avg-score">81</div>
+            <div class="avg-label">Avg. Score</div>
+          </div>
+        </div>
+      </div>
+      <div class="industry-card" data-industry="Financial Services">
+        <div class="industry-card-content">
+          <div class="industry-icon">🏦</div>
+          <h3>Financial Services</h3>
+          <div class="company-count">5 companies</div>
+          <div class="score-preview">
+            <div class="avg-score">71</div>
+            <div class="avg-label">Avg. Score</div>
+          </div>
+        </div>
+      </div>
+      <div class="industry-card" data-industry="Retail">
+        <div class="industry-card-content">
+          <div class="industry-icon">🛍️</div>
+          <h3>Retail</h3>
+          <div class="company-count">10 companies</div>
+          <div class="score-preview">
+            <div class="avg-score">73</div>
+            <div class="avg-label">Avg. Score</div>
+          </div>
+        </div>
+      </div>
+      <div class="industry-card" data-industry="Tech & Telecom">
+        <div class="industry-card-content">
+          <div class="industry-icon">📡</div>
+          <h3>Tech & Telecom</h3>
+          <div class="company-count">9 companies</div>
+          <div class="score-preview">
+            <div class="avg-score">75</div>
+            <div class="avg-label">Avg. Score</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics Deep Dive -->
+  <section class="metrics-section">
+    <div class="metrics-container">
+      <div class="section-header">
+        <h2>The Metrics That Matter</h2>
+        <p>How industries compare across 5 critical performance indicators</p>
+      </div>
+
+      <div class="metric-row" data-metric="qa">
+        <div class="metric-info">
+          <h3>QA Score</h3>
+          <p>Quality assurance scores measure adherence to scripts, compliance, and overall interaction quality.</p>
+        </div>
+        <div class="metric-bars">
+          <div class="metric-bar-row">
+            <span class="industry-name">Healthcare</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 93.3%"></div>
+            </div>
+            <span class="score">93.3</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Financial Services</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 86.1%"></div>
+            </div>
+            <span class="score">86.1</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Retail</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 82.7%"></div>
+            </div>
+            <span class="score">82.7</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Tech & Telecom</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 75.2%"></div>
+            </div>
+            <span class="score">75.2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-row" data-metric="csat">
+        <div class="metric-info">
+          <h3>CSAT</h3>
+          <p>Customer satisfaction scores capture how customers feel about their service experience.</p>
+        </div>
+        <div class="metric-bars">
+          <div class="metric-bar-row">
+            <span class="industry-name">Tech & Telecom</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 90.3%"></div>
+            </div>
+            <span class="score">90.3</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Healthcare</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 83.1%"></div>
+            </div>
+            <span class="score">83.1</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Retail</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 75.8%"></div>
+            </div>
+            <span class="score">75.8</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Financial Services</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 65.4%"></div>
+            </div>
+            <span class="score">65.4</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-row" data-metric="nps">
+        <div class="metric-info">
+          <h3>NPS</h3>
+          <p>Net Promoter Score indicates customer loyalty and likelihood to recommend.</p>
+        </div>
+        <div class="metric-bars">
+          <div class="metric-bar-row">
+            <span class="industry-name">Healthcare</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 72.1%"></div>
+            </div>
+            <span class="score">72.1</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Retail</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 52.3%"></div>
+            </div>
+            <span class="score">52.3</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Tech & Telecom</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 47.7%"></div>
+            </div>
+            <span class="score">47.7</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Financial Services</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 42.3%"></div>
+            </div>
+            <span class="score">42.3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-row" data-metric="fcr">
+        <div class="metric-info">
+          <h3>FCR</h3>
+          <p>First Contact Resolution measures how often issues are solved in a single interaction.</p>
+        </div>
+        <div class="metric-bars">
+          <div class="metric-bar-row">
+            <span class="industry-name">Retail</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 76.5%"></div>
+            </div>
+            <span class="score">76.5</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Tech & Telecom</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 75.5%"></div>
+            </div>
+            <span class="score">75.5</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Financial Services</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 72.7%"></div>
+            </div>
+            <span class="score">72.7</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Healthcare</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 66.4%"></div>
+            </div>
+            <span class="score">66.4</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-row" data-metric="transfer">
+        <div class="metric-info">
+          <h3>Transfer Rate</h3>
+          <p>The percentage of calls transferred to another agent. Lower is better.</p>
+        </div>
+        <div class="metric-bars">
+          <div class="metric-bar-row">
+            <span class="industry-name">Healthcare</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 10.9%; background: linear-gradient(90deg, #22C55E, #10B981);"></div>
+            </div>
+            <span class="score" style="color: #22C55E;">10.9%</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Financial Services</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 11.4%; background: linear-gradient(90deg, #22C55E, #10B981);"></div>
+            </div>
+            <span class="score" style="color: #22C55E;">11.4%</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Tech & Telecom</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 13.1%; background: linear-gradient(90deg, #F59E0B, #D97706);"></div>
+            </div>
+            <span class="score" style="color: #F59E0B;">13.1%</span>
+          </div>
+          <div class="metric-bar-row">
+            <span class="industry-name">Retail</span>
+            <div class="metric-bar-track">
+              <div class="metric-bar-fill" style="width: 22.5%; background: linear-gradient(90deg, #EF4444, #DC2626);"></div>
+            </div>
+            <span class="score" style="color: #EF4444;">22.5%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to see where you stand?</h2>
+      <p>Compare your metrics against industry benchmarks with our interactive tool.</p>
+      <div class="cta-buttons">
+        <a href="slot-machine.html" class="cta-btn primary">
+          See Where You Stand
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <button class="cta-btn secondary" onclick="window.open('https://www.amplifai.com/demo', '_blank')">
+          Book a Demo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Scroll progress bar
+    const progressBar = document.getElementById('progress-bar');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = scrollTop / docHeight;
+      progressBar.style.transform = `scaleX(${scrollPercent})`;
+    });
+
+    // Parallax gradient orbs
+    const orbs = document.querySelectorAll('.gradient-orb');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      orbs[0].style.transform = `translate(${scrollY * 0.1}px, ${scrollY * 0.05}px)`;
+      orbs[1].style.transform = `translate(${-scrollY * 0.08}px, ${scrollY * 0.1}px)`;
+      orbs[2].style.transform = `translate(${scrollY * 0.05}px, ${-scrollY * 0.08}px)`;
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // Animate numbers
+          if (entry.target.classList.contains('big-number')) {
+            animateNumber(entry.target);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements
+    document.querySelectorAll('.big-number, .industry-card, .metric-row, .section-header, .metrics-tracked').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Stagger metric chips when parent becomes visible
+    const metricsTracked = document.querySelector('.metrics-tracked');
+    const metricChipsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.metric-chip').forEach((chip, i) => {
+            setTimeout(() => {
+              chip.classList.add('visible');
+            }, i * 120);
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+    metricChipsObserver.observe(metricsTracked);
+
+    // Stagger industry cards
+    document.querySelectorAll('.industry-card').forEach((card, i) => {
+      card.style.transitionDelay = `${i * 0.15}s`;
+    });
+
+    // Stagger big numbers
+    document.querySelectorAll('.big-number').forEach((num, i) => {
+      num.style.transitionDelay = `${i * 0.2}s`;
+    });
+
+    // Animate numbers
+    function animateNumber(el) {
+      const target = parseInt(el.dataset.target);
+      const numberEl = el.querySelector('.number');
+      const duration = 2000;
+      const start = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        const current = Math.round(eased * target);
+        numberEl.textContent = current;
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    // Smooth scroll for mouse wheel (optional enhancement)
+    let currentScroll = window.scrollY;
+    let targetScroll = window.scrollY;
+    let ease = 0.08;
+
+    function smoothScroll() {
+      currentScroll += (targetScroll - currentScroll) * ease;
+      // Apply smooth scroll here if needed
+      requestAnimationFrame(smoothScroll);
+    }
+    // smoothScroll(); // Uncomment to enable custom smooth scroll
+  </script>
+</body>
+</html>

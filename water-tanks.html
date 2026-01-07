@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rising Tanks | AmplifAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --orange: #F26A3E;
+      --purple: #6B4C9A;
+      --navy: #0d0d1a;
+      --white: #ffffff;
+      --gray: #8888a0;
+      --green: #22C55E;
+      --red: #EF4444;
+    }
+
+    body {
+      font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .gradient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--orange) 0%, transparent 70%);
+      top: -150px;
+      right: -150px;
+    }
+
+    .orb-2 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+      bottom: -200px;
+      left: -200px;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(13, 13, 26, 0.95) 0%, transparent 100%);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--orange);
+    }
+
+    .nav-link {
+      padding: 12px 28px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background: var(--white);
+      color: var(--navy);
+    }
+
+    .main-container {
+      padding: 120px 48px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .header h1 .gradient {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      color: var(--gray);
+      font-size: 16px;
+    }
+
+    .top-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .benchmark-btn {
+      padding: 12px 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      color: var(--gray);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .benchmark-btn:hover {
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+    }
+
+    .benchmark-btn.active {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border-color: transparent;
+      color: var(--white);
+    }
+
+    .simulation-wrapper {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .input-panel {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .input-panel h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .metric-input-group {
+      margin-bottom: 16px;
+    }
+
+    .metric-input-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .metric-color-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .metric-input-label span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .metric-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .metric-input:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 20px rgba(242, 106, 62, 0.2);
+    }
+
+    .metric-input::placeholder {
+      color: rgba(255,255,255,0.2);
+      font-weight: 400;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .pour-btn {
+      padding: 16px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border: none;
+      border-radius: 12px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .pour-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(242, 106, 62, 0.3);
+    }
+
+    .pour-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .reset-btn {
+      padding: 12px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--gray);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .reset-btn:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    /* Tanks Area */
+    .tanks-area {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 80px;
+      padding: 40px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      min-height: 550px;
+      position: relative;
+    }
+
+    .tank-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .tank-label {
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .tank-label.yours {
+      color: var(--orange);
+    }
+
+    .tank-label.benchmark {
+      color: var(--purple);
+    }
+
+    .tank {
+      width: 180px;
+      height: 400px;
+      background: rgba(255,255,255,0.03);
+      border: 3px solid rgba(255,255,255,0.15);
+      border-radius: 12px 12px 20px 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+    }
+
+    .tank::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 60%;
+      bottom: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    /* Water inside tank */
+    .water {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0%;
+      transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 0 0 16px 16px;
+      overflow: hidden;
+    }
+
+    .water.yours {
+      background: linear-gradient(180deg, rgba(242, 106, 62, 0.9) 0%, rgba(242, 106, 62, 0.7) 100%);
+    }
+
+    .water.benchmark {
+      background: linear-gradient(180deg, rgba(107, 76, 154, 0.9) 0%, rgba(107, 76, 154, 0.7) 100%);
+    }
+
+    /* Animated waves */
+    .wave {
+      position: absolute;
+      top: -8px;
+      left: -10%;
+      width: 120%;
+      height: 20px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C200,100 400,20 600,60 C800,100 1000,20 1200,60 L1200,120 L0,120 Z' fill='rgba(255,255,255,0.2)'/%3E%3C/svg%3E");
+      background-size: 200px 20px;
+      animation: wave 3s linear infinite;
+    }
+
+    .wave:nth-child(2) {
+      top: -5px;
+      animation: wave 4s linear infinite reverse;
+      opacity: 0.5;
+    }
+
+    @keyframes wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-200px); }
+    }
+
+    /* Liquid layers for each metric */
+    .liquid-layer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Measurement lines */
+    .measurements {
+      position: absolute;
+      top: 0;
+      right: -35px;
+      bottom: 0;
+      width: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 5px 0;
+    }
+
+    .measurement {
+      font-size: 10px;
+      color: var(--gray);
+      text-align: left;
+    }
+
+    /* Percentage display */
+    .tank-percentage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-weight: 900;
+      color: white;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 10;
+    }
+
+    .tank-percentage.visible {
+      opacity: 1;
+    }
+
+    /* Pour animation */
+    .pour-stream {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 60px;
+      border-radius: 0 0 10px 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .pour-stream.active {
+      opacity: 1;
+      animation: pourFlow 0.5s ease-in-out infinite;
+    }
+
+    .pour-stream.yours {
+      background: linear-gradient(180deg, transparent 0%, var(--orange) 100%);
+    }
+
+    .pour-stream.benchmark {
+      background: linear-gradient(180deg, transparent 0%, var(--purple) 100%);
+    }
+
+    @keyframes pourFlow {
+      0%, 100% { transform: translateX(-50%) scaleY(1); }
+      50% { transform: translateX(-50%) scaleY(1.1); }
+    }
+
+    /* Bubbles */
+    .bubbles {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -20px;
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      animation: rise 2s ease-in infinite;
+    }
+
+    .bubble:nth-child(1) { left: 20%; animation-delay: 0s; animation-duration: 2.5s; }
+    .bubble:nth-child(2) { left: 40%; animation-delay: 0.5s; animation-duration: 2s; }
+    .bubble:nth-child(3) { left: 60%; animation-delay: 1s; animation-duration: 2.2s; }
+    .bubble:nth-child(4) { left: 80%; animation-delay: 1.5s; animation-duration: 1.8s; }
+    .bubble:nth-child(5) { left: 30%; animation-delay: 0.3s; animation-duration: 2.3s; }
+    .bubble:nth-child(6) { left: 70%; animation-delay: 0.8s; animation-duration: 2.1s; }
+
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-400px) scale(0.5); opacity: 0; }
+    }
+
+    /* Winner badge */
+    .winner-badge {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      color: #000;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 20;
+    }
+
+    .winner-badge.visible {
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--gray);
+    }
+
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+    }
+
+    /* Results Panel */
+    .results-panel {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 40px;
+      margin-top: 40px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .results-panel.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .results-header h2 {
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .result-badge {
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .result-badge.above {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: var(--green);
+    }
+
+    .result-badge.below {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: var(--red);
+    }
+
+    .result-badge.equal {
+      background: rgba(242, 106, 62, 0.15);
+      border: 1px solid rgba(242, 106, 62, 0.3);
+      color: var(--orange);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .result-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-card .metric-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .result-card .your-score {
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .result-card .vs-benchmark {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+
+    .result-card .diff {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    .result-card .diff.positive {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+    }
+
+    .result-card .diff.negative {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+
+    .result-card .diff.neutral {
+      background: rgba(255,255,255,0.05);
+      color: var(--gray);
+    }
+
+    @media (max-width: 900px) {
+      .simulation-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .tanks-area {
+        flex-direction: row;
+        gap: 40px;
+      }
+      .tank {
+        width: 140px;
+        height: 300px;
+      }
+      .results-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .main-container {
+        padding: 100px 20px 40px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        padding: 16px 20px;
+      }
+      .tanks-area {
+        gap: 24px;
+        padding: 20px;
+      }
+      .tank {
+        width: 120px;
+        height: 250px;
+      }
+      .tank-percentage {
+        font-size: 32px;
+      }
+      .results-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gradient-orb orb-1"></div>
+  <div class="gradient-orb orb-2"></div>
+
+  <nav class="nav">
+    <a href="index.html" class="logo">amplif<span>AI</span></a>
+    <a href="index.html" class="nav-link">← Back to Benchmarks</a>
+  </nav>
+
+  <div class="main-container">
+    <div class="header">
+      <h1>Rising <span class="gradient">Tanks</span></h1>
+      <p>Watch your metrics fill up against the benchmark</p>
+    </div>
+
+    <div class="top-controls">
+      <button class="benchmark-btn active" data-benchmark="overall">Overall Average</button>
+      <button class="benchmark-btn" data-benchmark="healthcare">Healthcare</button>
+      <button class="benchmark-btn" data-benchmark="financial">Financial Services</button>
+      <button class="benchmark-btn" data-benchmark="retail">Retail</button>
+      <button class="benchmark-btn" data-benchmark="tech">Tech & Telecom</button>
+    </div>
+
+    <div class="simulation-wrapper">
+      <div class="input-panel">
+        <h3>Enter Your Metrics</h3>
+
+        <div class="metric-input-group">
+          <div class="metric-input-label">
+            <div class="metric-color-dot" style="background: #FF6B6B;"></div>
+            <span>QA Score</span>
+          </div>
+          <input type="number" class="metric-input" id="input-qa" placeholder="0-100" min="0" max="100" step="0.1" value="88.5">
+        </div>
+
+        <div class="metric-input-group">
+          <div class="metric-input-label">
+            <div class="metric-color-dot" style="background: #4ECDC4;"></div>
+            <span>CSAT</span>
+          </div>
+          <input type="number" class="metric-input" id="input-csat" placeholder="0-100" min="0" max="100" step="0.1" value="85.2">
+        </div>
+
+        <div class="metric-input-group">
+          <div class="metric-input-label">
+            <div class="metric-color-dot" style="background: #FFE66D;"></div>
+            <span>NPS</span>
+          </div>
+          <input type="number" class="metric-input" id="input-nps" placeholder="-100 to 100" min="-100" max="100" step="0.1" value="68.0">
+        </div>
+
+        <div class="metric-input-group">
+          <div class="metric-input-label">
+            <div class="metric-color-dot" style="background: #95E1D3;"></div>
+            <span>FCR</span>
+          </div>
+          <input type="number" class="metric-input" id="input-fcr" placeholder="0-100" min="0" max="100" step="0.1" value="71.3">
+        </div>
+
+        <div class="metric-input-group">
+          <div class="metric-input-label">
+            <div class="metric-color-dot" style="background: #DDA0DD;"></div>
+            <span>Transfer Rate</span>
+          </div>
+          <input type="number" class="metric-input" id="input-transfer" placeholder="0-100" min="0" max="100" step="0.1" value="8.5">
+        </div>
+
+        <div class="action-buttons">
+          <button class="pour-btn" id="pour-btn">Fill Tanks</button>
+          <button class="reset-btn" id="reset-btn">Reset</button>
+        </div>
+      </div>
+
+      <div class="tanks-area">
+        <!-- Your Tank -->
+        <div class="tank-container">
+          <div class="tank-label yours">Your Score</div>
+          <div class="tank" id="tank-yours">
+            <div class="pour-stream yours" id="pour-yours"></div>
+            <div class="winner-badge" id="winner-yours">Winner!</div>
+            <div class="water yours" id="water-yours">
+              <div class="wave"></div>
+              <div class="wave"></div>
+              <div class="bubbles">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+              </div>
+            </div>
+            <div class="tank-percentage" id="percent-yours">0%</div>
+            <div class="measurements">
+              <span class="measurement">100</span>
+              <span class="measurement">75</span>
+              <span class="measurement">50</span>
+              <span class="measurement">25</span>
+              <span class="measurement">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Benchmark Tank -->
+        <div class="tank-container">
+          <div class="tank-label benchmark">Benchmark</div>
+          <div class="tank" id="tank-benchmark">
+            <div class="pour-stream benchmark" id="pour-benchmark"></div>
+            <div class="winner-badge" id="winner-benchmark">Winner!</div>
+            <div class="water benchmark" id="water-benchmark">
+              <div class="wave"></div>
+              <div class="wave"></div>
+              <div class="bubbles">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+              </div>
+            </div>
+            <div class="tank-percentage" id="percent-benchmark">0%</div>
+            <div class="measurements">
+              <span class="measurement">100</span>
+              <span class="measurement">75</span>
+              <span class="measurement">50</span>
+              <span class="measurement">25</span>
+              <span class="measurement">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #FF6B6B;"></div>
+        <span>QA Score</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #4ECDC4;"></div>
+        <span>CSAT</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #FFE66D;"></div>
+        <span>NPS</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #95E1D3;"></div>
+        <span>FCR</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background: #DDA0DD;"></div>
+        <span>Transfer Rate</span>
+      </div>
+    </div>
+
+    <div class="results-panel" id="results-panel">
+      <div class="results-header">
+        <h2>Performance Report</h2>
+        <div class="result-badge" id="result-badge">Calculating...</div>
+      </div>
+
+      <div class="results-grid" id="results-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    const benchmarks = {
+      healthcare: { qa: 93.3, csat: 83.1, nps: 72.1, fcr: 66.4, transfer: 10.9 },
+      financial: { qa: 86.1, csat: 65.4, nps: 42.3, fcr: 72.7, transfer: 11.4 },
+      retail: { qa: 82.7, csat: 75.8, nps: 52.3, fcr: 76.5, transfer: 22.5 },
+      tech: { qa: 75.2, csat: 90.3, nps: 47.7, fcr: 75.5, transfer: 13.1 }
+    };
+
+    benchmarks.overall = {
+      qa: (93.3 + 86.1 + 82.7 + 75.2) / 4,
+      csat: (83.1 + 65.4 + 75.8 + 90.3) / 4,
+      nps: (72.1 + 42.3 + 52.3 + 47.7) / 4,
+      fcr: (66.4 + 72.7 + 76.5 + 75.5) / 4,
+      transfer: (10.9 + 11.4 + 22.5 + 13.1) / 4
+    };
+
+    const metricColors = {
+      qa: '#FF6B6B',
+      csat: '#4ECDC4',
+      nps: '#FFE66D',
+      fcr: '#95E1D3',
+      transfer: '#DDA0DD'
+    };
+
+    let currentBenchmark = 'overall';
+
+    // Elements
+    const waterYours = document.getElementById('water-yours');
+    const waterBenchmark = document.getElementById('water-benchmark');
+    const percentYours = document.getElementById('percent-yours');
+    const percentBenchmark = document.getElementById('percent-benchmark');
+    const pourYours = document.getElementById('pour-yours');
+    const pourBenchmark = document.getElementById('pour-benchmark');
+    const winnerYours = document.getElementById('winner-yours');
+    const winnerBenchmark = document.getElementById('winner-benchmark');
+
+    // Benchmark selector
+    document.querySelectorAll('.benchmark-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.benchmark-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentBenchmark = btn.dataset.benchmark;
+        resetTanks();
+      });
+    });
+
+    document.getElementById('pour-btn').addEventListener('click', fillTanks);
+    document.getElementById('reset-btn').addEventListener('click', resetTanks);
+
+    function resetTanks() {
+      waterYours.style.height = '0%';
+      waterBenchmark.style.height = '0%';
+      percentYours.textContent = '0%';
+      percentBenchmark.textContent = '0%';
+      percentYours.classList.remove('visible');
+      percentBenchmark.classList.remove('visible');
+      winnerYours.classList.remove('visible');
+      winnerBenchmark.classList.remove('visible');
+      pourYours.classList.remove('active');
+      pourBenchmark.classList.remove('active');
+      document.getElementById('results-panel').classList.remove('visible');
+      document.getElementById('pour-btn').disabled = false;
+    }
+
+    function fillTanks() {
+      const metrics = ['qa', 'csat', 'nps', 'fcr', 'transfer'];
+      const userValues = {};
+      let hasValues = false;
+
+      metrics.forEach(m => {
+        const val = parseFloat(document.getElementById(`input-${m}`).value);
+        if (!isNaN(val)) {
+          userValues[m] = val;
+          hasValues = true;
+        }
+      });
+
+      if (!hasValues) {
+        alert('Please enter at least one metric value');
+        return;
+      }
+
+      document.getElementById('pour-btn').disabled = true;
+      resetTanks();
+      document.getElementById('pour-btn').disabled = true;
+
+      const benchData = benchmarks[currentBenchmark];
+
+      // Calculate totals
+      let userTotal = 0;
+      let benchTotal = 0;
+      let metricCount = 0;
+
+      metrics.forEach(metric => {
+        const userVal = userValues[metric];
+        const benchVal = benchData[metric];
+
+        if (userVal === undefined) return;
+        metricCount++;
+
+        if (metric === 'transfer') {
+          userTotal += (100 - userVal);
+          benchTotal += (100 - benchVal);
+        } else if (metric === 'nps') {
+          userTotal += (userVal + 100) / 2;
+          benchTotal += (benchVal + 100) / 2;
+        } else {
+          userTotal += userVal;
+          benchTotal += benchVal;
+        }
+      });
+
+      const maxPossible = metricCount * 100;
+      const userPercent = Math.round((userTotal / maxPossible) * 100);
+      const benchPercent = Math.round((benchTotal / maxPossible) * 100);
+
+      // Start pour animation
+      pourYours.classList.add('active');
+      pourBenchmark.classList.add('active');
+
+      // Animate the fill
+      setTimeout(() => {
+        waterYours.style.height = userPercent + '%';
+        waterBenchmark.style.height = benchPercent + '%';
+
+        // Animate percentage counter
+        animateCounter(percentYours, userPercent);
+        animateCounter(percentBenchmark, benchPercent);
+
+        percentYours.classList.add('visible');
+        percentBenchmark.classList.add('visible');
+      }, 300);
+
+      // Stop pour and show winner
+      setTimeout(() => {
+        pourYours.classList.remove('active');
+        pourBenchmark.classList.remove('active');
+
+        if (userPercent > benchPercent) {
+          winnerYours.classList.add('visible');
+        } else if (benchPercent > userPercent) {
+          winnerBenchmark.classList.add('visible');
+        }
+
+        showResults(userValues, benchData, userPercent, benchPercent);
+      }, 2000);
+    }
+
+    function animateCounter(element, target) {
+      let current = 0;
+      const duration = 1500;
+      const start = performance.now();
+
+      function update(timestamp) {
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        current = Math.round(eased * target);
+        element.textContent = current + '%';
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    function showResults(userValues, benchData, userPercent, benchPercent) {
+      const metrics = ['qa', 'csat', 'nps', 'fcr', 'transfer'];
+      const metricLabels = { qa: 'QA Score', csat: 'CSAT', nps: 'NPS', fcr: 'FCR', transfer: 'Transfer Rate' };
+
+      let resultsHtml = '';
+
+      metrics.forEach(metric => {
+        const userVal = userValues[metric];
+        const benchVal = benchData[metric];
+
+        if (userVal === undefined) return;
+
+        let diff, diffClass, diffText;
+
+        if (metric === 'transfer') {
+          diff = benchVal - userVal;
+          diffClass = diff > 1 ? 'positive' : diff < -1 ? 'negative' : 'neutral';
+          diffText = diff > 1 ? `${diff.toFixed(1)}% better` : diff < -1 ? `${Math.abs(diff).toFixed(1)}% worse` : 'On par';
+        } else {
+          diff = userVal - benchVal;
+          diffClass = diff > 1 ? 'positive' : diff < -1 ? 'negative' : 'neutral';
+          diffText = diff > 1 ? `+${diff.toFixed(1)}` : diff < -1 ? `${diff.toFixed(1)}` : 'On par';
+        }
+
+        const color = metricColors[metric];
+
+        resultsHtml += `
+          <div class="result-card" style="border-top: 3px solid ${color};">
+            <div class="metric-name">${metricLabels[metric]}</div>
+            <div class="your-score" style="color: ${color};">${userVal}</div>
+            <div class="vs-benchmark">vs ${benchVal.toFixed(1)}</div>
+            <div class="diff ${diffClass}">${diffText}</div>
+          </div>
+        `;
+      });
+
+      document.getElementById('results-grid').innerHTML = resultsHtml;
+
+      const badge = document.getElementById('result-badge');
+      if (userPercent > benchPercent + 2) {
+        badge.className = 'result-badge above';
+        badge.textContent = '🏆 Above Benchmark';
+      } else if (userPercent < benchPercent - 2) {
+        badge.className = 'result-badge below';
+        badge.textContent = '📈 Room to Grow';
+      } else {
+        badge.className = 'result-badge equal';
+        badge.textContent = '⚖️ On Par';
+      }
+
+      document.getElementById('results-panel').classList.add('visible');
+    }
+  </script>
+</body>
+</html>
