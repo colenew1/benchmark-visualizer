@@ -57,16 +57,21 @@
     }
 
     .logo {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--white);
+      display: flex;
+      align-items: center;
+      text-decoration: none;
     }
 
-    .logo span {
-      color: var(--orange);
+    .logo-img {
+      height: 32px;
+      width: auto;
+      border-radius: 6px;
     }
 
     .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 12px 28px;
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(20px);
@@ -80,11 +85,20 @@
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    .nav-cta svg {
+      color: var(--orange);
+      transition: color 0.3s ease;
+    }
+
     .nav-cta:hover {
-      background: var(--white);
-      color: var(--navy);
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border-color: transparent;
       transform: scale(1.05);
-      box-shadow: 0 10px 40px rgba(255,255,255,0.2);
+      box-shadow: 0 10px 40px var(--orange-glow);
+    }
+
+    .nav-cta:hover svg {
+      color: var(--white);
     }
 
     /* Sections */
@@ -367,7 +381,18 @@
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
       opacity: 0;
+      text-decoration: none;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       animation: floatIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .floating-stat:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--orange);
+      transform: scale(1.08) !important;
+      box-shadow: 0 10px 40px var(--orange-glow), 0 0 30px var(--orange-glow);
     }
 
     .floating-stat:nth-child(1) { top: 20%; left: 8%; animation-delay: 1s; }
@@ -383,6 +408,11 @@
       font-size: 24px;
       font-weight: 900;
       color: var(--orange);
+      transition: all 0.3s ease;
+    }
+
+    .floating-stat:hover .stat-value {
+      text-shadow: 0 0 20px var(--orange-glow);
     }
 
     .floating-stat .stat-label {
@@ -390,6 +420,11 @@
       color: var(--gray);
       text-transform: uppercase;
       letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    .floating-stat:hover .stat-label {
+      color: var(--white);
     }
 
     /* Animated floating */
@@ -420,10 +455,11 @@
 
     .big-number-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 60px;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 30px;
       max-width: 1100px;
       width: 100%;
+      align-items: stretch;
     }
 
     .big-number {
@@ -433,10 +469,21 @@
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 32px;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
       opacity: 0;
       transform: translateY(60px) scale(0.95);
       transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .big-number.featured {
+      grid-row: span 1;
+    }
+
+    .big-number.featured .number {
+      font-size: clamp(80px, 12vw, 140px);
     }
 
     .big-number.visible {
@@ -475,6 +522,16 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       transition: all 0.4s ease;
+    }
+
+    .number-suffix {
+      display: inline;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .number-suffix.visible {
+      opacity: 1;
     }
 
     .big-number:hover .number {
@@ -533,9 +590,10 @@
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 50px;
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: default;
+      cursor: pointer;
       opacity: 0;
       transform: translateY(20px) scale(0.95);
+      text-decoration: none;
     }
 
     .metric-chip.visible {
@@ -672,7 +730,7 @@
       text-decoration: none;
       color: inherit;
       display: block;
-      min-height: 380px;
+      min-height: 280px;
     }
 
     .industry-card.visible {
@@ -738,33 +796,34 @@
     }
 
     .industry-card .score-preview {
-      margin-top: 32px;
-      padding-top: 32px;
+      margin-top: 24px;
+      padding-top: 24px;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
-    .industry-card .avg-score {
-      font-size: 56px;
+    .industry-card .best-score {
+      font-size: 48px;
       font-weight: 900;
       background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       transition: all 0.4s ease;
+      line-height: 1;
     }
 
-    .industry-card:hover .avg-score {
+    .industry-card:hover .best-score {
       background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
       -webkit-background-clip: text;
       background-clip: text;
     }
 
-    .industry-card .avg-label {
+    .industry-card .best-label {
       font-size: 11px;
       color: var(--gray);
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-top: 4px;
+      margin-top: 8px;
     }
 
     /* Sub-Industries Dropdown */
@@ -833,104 +892,60 @@
       color: var(--white);
     }
 
-    /* Add Your Metrics Button */
-    .add-metrics-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 60px;
-      width: 100%;
-    }
-
-    .add-metrics-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 50px;
-      color: var(--white);
-      font-family: 'Lato', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .add-metrics-btn:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: var(--orange);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .add-metrics-btn svg {
-      width: 18px;
-      height: 18px;
-      color: var(--orange);
-    }
-
-    .add-metrics-btn .chevron {
-      width: 16px;
-      height: 16px;
-      color: var(--gray);
-      transition: transform 0.3s ease;
-    }
-
-    .add-metrics-container.expanded .add-metrics-btn .chevron {
-      transform: rotate(180deg);
-    }
-
-    .add-metrics-container.expanded .add-metrics-btn {
-      background: rgba(242, 106, 62, 0.1);
-      border-color: var(--orange);
-    }
-
-    .metrics-input-form {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-      margin-top: 24px;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      background: rgba(255,255,255,0.02);
+    /* Metrics Slide-out Panel */
+    .metrics-panel {
+      position: fixed;
+      top: 70px;
+      right: 24px;
+      background: var(--navy-light);
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 20px;
-      padding: 0 32px;
-      max-width: 900px;
+      padding: 20px 24px;
+      z-index: 1500;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px) scale(0.95);
+      transform-origin: top right;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(242, 106, 62, 0.1);
     }
 
-    .add-metrics-container.expanded .metrics-input-form {
-      max-height: 200px;
+    .metrics-panel.active {
       opacity: 1;
-      padding: 28px 32px;
-      border: 1px solid rgba(255,255,255,0.08);
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .metrics-panel-form {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
     }
 
     .metric-input-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .metric-input-group label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 600;
       color: var(--gray);
       text-transform: uppercase;
       letter-spacing: 1px;
+      white-space: nowrap;
     }
 
     .metric-input-group input {
-      padding: 12px 14px;
+      width: 80px;
+      padding: 10px 8px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 10px;
       color: var(--white);
       font-family: 'Lato', sans-serif;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       text-align: center;
       transition: all 0.3s ease;
@@ -939,12 +954,98 @@
     .metric-input-group input:focus {
       outline: none;
       border-color: var(--orange);
-      box-shadow: 0 0 20px var(--orange-glow);
+      box-shadow: 0 0 15px var(--orange-glow);
     }
 
     .metric-input-group input::placeholder {
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.25);
       font-weight: 400;
+      font-size: 11px;
+    }
+
+    .panel-apply-btn {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border: none;
+      border-radius: 10px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .panel-apply-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--orange-glow);
+    }
+
+    /* Success state indicator */
+    .metrics-applied-badge {
+      position: fixed;
+      top: 70px;
+      right: 24px;
+      padding: 12px 20px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      border-radius: 50px;
+      color: #22C55E;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1600;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .metrics-applied-badge.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .metrics-applied-badge svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .metrics-panel {
+        right: 16px;
+        left: 16px;
+        top: 65px;
+      }
+
+      .metrics-panel-form {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .metric-input-group input {
+        width: 70px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .metrics-panel-form {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      .metric-input-group input {
+        width: 100%;
+      }
+
+      .panel-apply-btn {
+        grid-column: span 3;
+        padding: 12px;
+      }
     }
 
     /* User metrics bar row */
@@ -1011,18 +1112,6 @@
       transform: translateX(4px);
     }
 
-    @media (max-width: 900px) {
-      .metrics-input-form {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .metrics-input-form {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
     /* Metrics Deep Dive */
     .metrics-section {
       padding: 180px 48px;
@@ -1053,6 +1142,7 @@
       opacity: 0;
       transform: translateY(60px);
       transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+      scroll-margin-top: 120px;
     }
 
     .metric-row.visible {
@@ -1282,6 +1372,21 @@
       box-shadow: 0 20px 60px rgba(255,255,255,0.1);
     }
 
+    /* Footer */
+    .footer {
+      padding: 40px 48px;
+      text-align: center;
+      background: var(--navy);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--gray);
+      opacity: 0.6;
+    }
+
     /* Progress Bar */
     .progress-bar {
       position: fixed;
@@ -1349,6 +1454,41 @@
   <!-- Progress Bar -->
   <div class="progress-bar" id="progress-bar"></div>
 
+  <!-- Metrics Slide-out Panel -->
+  <div class="metrics-panel" id="metrics-panel">
+    <div class="metrics-panel-form">
+      <div class="metric-input-group">
+        <label>QA Score</label>
+        <input type="number" id="user-qa" placeholder="0-100" min="0" max="100" step="0.1">
+      </div>
+      <div class="metric-input-group">
+        <label>CSAT</label>
+        <input type="number" id="user-csat" placeholder="0-100" min="0" max="100" step="0.1">
+      </div>
+      <div class="metric-input-group">
+        <label>NPS</label>
+        <input type="number" id="user-nps" placeholder="±100" min="-100" max="100" step="0.1">
+      </div>
+      <div class="metric-input-group">
+        <label>FCR</label>
+        <input type="number" id="user-fcr" placeholder="0-100" min="0" max="100" step="0.1">
+      </div>
+      <div class="metric-input-group">
+        <label>Transfer</label>
+        <input type="number" id="user-transfer" placeholder="0-100" min="0" max="100" step="0.1">
+      </div>
+      <button class="panel-apply-btn" onclick="applyMetrics()">Apply</button>
+    </div>
+  </div>
+
+  <!-- Success Badge -->
+  <div class="metrics-applied-badge" id="metrics-badge">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6L9 17l-5-5"/>
+    </svg>
+    Metrics Applied
+  </div>
+
   <!-- Continuous Background -->
   <div class="space-bg" id="space-bg">
     <div class="ambient-glow ambient-glow-1"></div>
@@ -1358,39 +1498,47 @@
 
   <!-- Navigation -->
   <nav class="nav">
-    <div class="logo">amplif<span>AI</span></div>
-    <button class="nav-cta" onclick="window.open('https://www.amplifai.com/schedule-demo', '_blank')">Book a Demo</button>
+    <a href="/" class="logo">
+      <img src="assets/AmplifAI 1.png" alt="AmplifAI" class="logo-img">
+    </a>
+    <button class="nav-cta" onclick="openMetricsModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;">
+        <path d="M12 20V10M18 20V4M6 20v-4"/>
+      </svg>
+      Add Your Metrics
+    </button>
   </nav>
 
   <!-- Hero -->
   <section class="hero">
     <div class="floating-stats">
-      <div class="floating-stat">
+      <a href="#metric-qa" class="floating-stat">
         <div class="stat-value">93.3</div>
         <div class="stat-label">Highest QA Score</div>
-      </div>
-      <div class="floating-stat">
+      </a>
+      <a href="#metric-csat" class="floating-stat">
         <div class="stat-value">90.3</div>
         <div class="stat-label">Top CSAT</div>
-      </div>
-      <div class="floating-stat">
+      </a>
+      <a href="#metric-fcr" class="floating-stat">
         <div class="stat-value">76.5</div>
         <div class="stat-label">Best FCR</div>
-      </div>
-      <div class="floating-stat">
+      </a>
+      <a href="#metric-transfer" class="floating-stat">
         <div class="stat-value">10.9%</div>
         <div class="stat-label">Lowest Transfer</div>
-      </div>
+      </a>
     </div>
 
     <div class="hero-content">
-      <div class="hero-label">2025 Industry Benchmark Report</div>
+      <div class="hero-label">2026 Industry Benchmark Report</div>
       <h1>
         <span class="line">Know Where</span>
         <span class="line gradient">You Stand</span>
       </h1>
       <p class="hero-sub">
-        Real performance data from <strong>30 companies</strong> across 4 industry verticals. See how you compare.
+        Real performance data across four industry verticals.<br>
+        See how you compare.
       </p>
 
     </div>
@@ -1407,8 +1555,8 @@
   <!-- Big Numbers -->
   <section class="big-number-section">
     <div class="big-number-grid">
-      <div class="big-number" data-target="30">
-        <div class="number">0</div>
+      <div class="big-number featured" data-target="200" data-suffix="+">
+        <div class="number">0<span class="number-suffix"></span></div>
         <div class="label">Companies Analyzed</div>
       </div>
       <div class="big-number" data-target="4">
@@ -1425,41 +1573,41 @@
     <div class="metrics-tracked">
       <div class="metrics-tracked-label">Metrics Tracked</div>
       <div class="metrics-chips">
-        <div class="metric-chip">
+        <a href="#metric-qa" class="metric-chip">
           <div class="metric-chip-icon">QA</div>
           <div class="metric-chip-content">
             <div class="metric-chip-name">QA Score</div>
             <div class="metric-chip-desc">Quality Assurance</div>
           </div>
-        </div>
-        <div class="metric-chip">
+        </a>
+        <a href="#metric-csat" class="metric-chip">
           <div class="metric-chip-icon">CS</div>
           <div class="metric-chip-content">
             <div class="metric-chip-name">CSAT</div>
             <div class="metric-chip-desc">Customer Satisfaction</div>
           </div>
-        </div>
-        <div class="metric-chip">
+        </a>
+        <a href="#metric-nps" class="metric-chip">
           <div class="metric-chip-icon">NP</div>
           <div class="metric-chip-content">
             <div class="metric-chip-name">NPS</div>
             <div class="metric-chip-desc">Net Promoter Score</div>
           </div>
-        </div>
-        <div class="metric-chip">
+        </a>
+        <a href="#metric-fcr" class="metric-chip">
           <div class="metric-chip-icon">FC</div>
           <div class="metric-chip-content">
             <div class="metric-chip-name">FCR</div>
             <div class="metric-chip-desc">First Contact Resolution</div>
           </div>
-        </div>
-        <div class="metric-chip">
+        </a>
+        <a href="#metric-transfer" class="metric-chip">
           <div class="metric-chip-icon">TR</div>
           <div class="metric-chip-content">
             <div class="metric-chip-name">Transfer Rate</div>
             <div class="metric-chip-desc">Call Transfers</div>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>
@@ -1479,8 +1627,8 @@
           <div class="industry-icon">🏥</div>
           <h3>Healthcare</h3>
           <div class="score-preview">
-            <div class="avg-score">81</div>
-            <div class="avg-label">Avg. Score</div>
+            <div class="best-score">10.9%</div>
+            <div class="best-label">Transfer Rate</div>
           </div>
           <div class="sub-industries">
             <ul class="sub-industry-list">
@@ -1505,8 +1653,8 @@
           <div class="industry-icon">🏦</div>
           <h3>Financial Services</h3>
           <div class="score-preview">
-            <div class="avg-score">71</div>
-            <div class="avg-label">Avg. Score</div>
+            <div class="best-score">86.1</div>
+            <div class="best-label">QA Score</div>
           </div>
           <div class="sub-industries">
             <ul class="sub-industry-list">
@@ -1531,8 +1679,8 @@
           <div class="industry-icon">🛍️</div>
           <h3>Retail</h3>
           <div class="score-preview">
-            <div class="avg-score">73</div>
-            <div class="avg-label">Avg. Score</div>
+            <div class="best-score">76.5</div>
+            <div class="best-label">FCR</div>
           </div>
           <div class="sub-industries">
             <ul class="sub-industry-list">
@@ -1557,8 +1705,8 @@
           <div class="industry-icon">📡</div>
           <h3>Tech & Telecom</h3>
           <div class="score-preview">
-            <div class="avg-score">75</div>
-            <div class="avg-label">Avg. Score</div>
+            <div class="best-score">90.3</div>
+            <div class="best-label">CSAT</div>
           </div>
           <div class="sub-industries">
             <ul class="sub-industry-list">
@@ -1592,42 +1740,7 @@
         <p>How industries compare across 5 critical performance indicators</p>
       </div>
 
-      <!-- Add Your Metrics Button -->
-      <div class="add-metrics-container" id="add-metrics-panel">
-        <button class="add-metrics-btn" onclick="toggleMetricsPanel()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 20V10M18 20V4M6 20v-4"/>
-          </svg>
-          Add Your Metrics
-          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 9l6 6 6-6"/>
-          </svg>
-        </button>
-        <div class="metrics-input-form">
-          <div class="metric-input-group">
-            <label>QA Score</label>
-            <input type="number" id="user-qa" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateUserMetrics()">
-          </div>
-          <div class="metric-input-group">
-            <label>CSAT</label>
-            <input type="number" id="user-csat" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateUserMetrics()">
-          </div>
-          <div class="metric-input-group">
-            <label>NPS</label>
-            <input type="number" id="user-nps" placeholder="±100" min="-100" max="100" step="0.1" oninput="updateUserMetrics()">
-          </div>
-          <div class="metric-input-group">
-            <label>FCR</label>
-            <input type="number" id="user-fcr" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateUserMetrics()">
-          </div>
-          <div class="metric-input-group">
-            <label>Transfer Rate</label>
-            <input type="number" id="user-transfer" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateUserMetrics()">
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-row" data-metric="qa">
+      <div class="metric-row" data-metric="qa" id="metric-qa">
         <div class="metric-info">
           <h3>QA Score</h3>
           <p>Quality assurance scores measure adherence to scripts, compliance, and overall interaction quality.</p>
@@ -1671,7 +1784,7 @@
         </div>
       </div>
 
-      <div class="metric-row" data-metric="csat">
+      <div class="metric-row" data-metric="csat" id="metric-csat">
         <div class="metric-info">
           <h3>CSAT</h3>
           <p>Customer satisfaction scores capture how customers feel about their service experience.</p>
@@ -1715,7 +1828,7 @@
         </div>
       </div>
 
-      <div class="metric-row" data-metric="nps">
+      <div class="metric-row" data-metric="nps" id="metric-nps">
         <div class="metric-info">
           <h3>NPS</h3>
           <p>Net Promoter Score indicates customer loyalty and likelihood to recommend.</p>
@@ -1759,7 +1872,7 @@
         </div>
       </div>
 
-      <div class="metric-row" data-metric="fcr">
+      <div class="metric-row" data-metric="fcr" id="metric-fcr">
         <div class="metric-info">
           <h3>FCR</h3>
           <p>First Contact Resolution measures how often issues are solved in a single interaction.</p>
@@ -1803,7 +1916,7 @@
         </div>
       </div>
 
-      <div class="metric-row" data-metric="transfer">
+      <div class="metric-row" data-metric="transfer" id="metric-transfer">
         <div class="metric-info">
           <h3>Transfer Rate</h3>
           <p>The percentage of calls transferred to another agent. Lower is better.</p>
@@ -1876,6 +1989,11 @@
     </div>
   </section>
 
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">Data reflects industry benchmarks collected during the 2025 reporting period.</p>
+  </footer>
+
   <script>
     // Scroll progress bar
     const progressBar = document.getElementById('progress-bar');
@@ -1940,16 +2058,32 @@
     // Animate numbers
     function animateNumber(el) {
       const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
       const numberEl = el.querySelector('.number');
+      const suffixEl = el.querySelector('.number-suffix');
       const duration = 2000;
       const start = performance.now();
+
+      // Pre-set the suffix content so layout is stable
+      if (suffixEl && suffix) {
+        suffixEl.textContent = suffix;
+      }
 
       function update(currentTime) {
         const elapsed = currentTime - start;
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 4);
         const current = Math.round(eased * target);
-        numberEl.textContent = current;
+
+        // Update only the number part, keep suffix separate
+        if (suffixEl) {
+          numberEl.firstChild.textContent = current;
+          if (progress === 1) {
+            suffixEl.classList.add('visible');
+          }
+        } else {
+          numberEl.textContent = current;
+        }
 
         if (progress < 1) {
           requestAnimationFrame(update);
@@ -2056,14 +2190,47 @@
       });
     });
 
-    // Toggle metrics input panel
-    function toggleMetricsPanel() {
-      const container = document.getElementById('add-metrics-panel');
-      container.classList.toggle('expanded');
+    // Panel toggle functions
+    function openMetricsModal() {
+      const panel = document.getElementById('metrics-panel');
+      panel.classList.toggle('active');
+
+      // Load saved metrics when opening
+      if (panel.classList.contains('active')) {
+        const savedMetrics = JSON.parse(localStorage.getItem('userMetrics') || '{}');
+        document.getElementById('user-qa').value = savedMetrics.qa || '';
+        document.getElementById('user-csat').value = savedMetrics.csat || '';
+        document.getElementById('user-nps').value = savedMetrics.nps || '';
+        document.getElementById('user-fcr').value = savedMetrics.fcr || '';
+        document.getElementById('user-transfer').value = savedMetrics.transfer || '';
+      }
     }
 
-    // Update user metrics bars
-    function updateUserMetrics() {
+    function closeMetricsPanel() {
+      const panel = document.getElementById('metrics-panel');
+      panel.classList.remove('active');
+    }
+
+    // Close panel on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMetricsPanel();
+      }
+    });
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+      const panel = document.getElementById('metrics-panel');
+      const navBtn = document.querySelector('.nav-cta');
+      if (panel.classList.contains('active') &&
+          !panel.contains(e.target) &&
+          !navBtn.contains(e.target)) {
+        closeMetricsPanel();
+      }
+    });
+
+    // Apply metrics from modal
+    function applyMetrics() {
       const metrics = {
         qa: { input: 'user-qa', bar: 'user-qa-bar', max: 100 },
         csat: { input: 'user-csat', bar: 'user-csat-bar', max: 100 },
@@ -2074,6 +2241,7 @@
 
       // Collect values for localStorage
       const savedMetrics = {};
+      let hasAnyValue = false;
 
       Object.keys(metrics).forEach(key => {
         const config = metrics[key];
@@ -2084,7 +2252,8 @@
         // Save to metrics object
         savedMetrics[key] = !isNaN(value) ? value : 0;
 
-        if (!isNaN(value) && value !== '') {
+        if (!isNaN(value) && input.value !== '') {
+          hasAnyValue = true;
           bar.classList.add('visible');
           const fill = bar.querySelector('.metric-bar-fill');
           const scoreEl = bar.querySelector('.score');
@@ -2111,7 +2280,60 @@
 
       // Save to localStorage for calculator page
       localStorage.setItem('userMetrics', JSON.stringify(savedMetrics));
+
+      // Close panel
+      closeMetricsPanel();
+
+      // Show success badge if any values were entered
+      if (hasAnyValue) {
+        const badge = document.getElementById('metrics-badge');
+        badge.classList.add('visible');
+
+        // Hide badge after 3 seconds
+        setTimeout(() => {
+          badge.classList.remove('visible');
+        }, 3000);
+      }
     }
+
+    // Load saved metrics on page load
+    function loadSavedMetrics() {
+      const savedMetrics = JSON.parse(localStorage.getItem('userMetrics') || '{}');
+      const metrics = {
+        qa: { bar: 'user-qa-bar', max: 100 },
+        csat: { bar: 'user-csat-bar', max: 100 },
+        nps: { bar: 'user-nps-bar', max: 100, min: -100 },
+        fcr: { bar: 'user-fcr-bar', max: 100 },
+        transfer: { bar: 'user-transfer-bar', max: 100, isTransfer: true }
+      };
+
+      Object.keys(metrics).forEach(key => {
+        const config = metrics[key];
+        const value = savedMetrics[key];
+        const bar = document.getElementById(config.bar);
+
+        if (value && !isNaN(value) && value !== 0) {
+          bar.classList.add('visible');
+          const fill = bar.querySelector('.metric-bar-fill');
+          const scoreEl = bar.querySelector('.score');
+
+          let widthPercent;
+          if (config.min !== undefined) {
+            widthPercent = ((value - config.min) / (config.max - config.min)) * 100;
+          } else {
+            widthPercent = (value / config.max) * 100;
+          }
+          widthPercent = Math.max(0, Math.min(100, widthPercent));
+
+          fill.style.width = widthPercent + '%';
+          scoreEl.textContent = config.isTransfer ? value.toFixed(1) + '%' : value.toFixed(1);
+          fill.style.transform = 'scaleX(1)';
+        }
+      });
+    }
+
+    // Run on page load
+    loadSavedMetrics();
   </script>
 </body>
 </html>
