@@ -23,6 +23,8 @@
       --navy-light: #1a1a2e;
       --white: #ffffff;
       --gray: #8888a0;
+      --green: #22C55E;
+      --red: #EF4444;
     }
 
     body {
@@ -30,92 +32,82 @@
       background: var(--navy);
       color: var(--white);
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 48px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      padding: 48px;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(13, 13, 26, 0.95) 0%, transparent 100%);
     }
 
-    .container {
-      text-align: center;
-      max-width: 600px;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: rgba(242, 106, 62, 0.1);
-      border: 1px solid rgba(242, 106, 62, 0.3);
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--orange);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 32px;
-    }
-
-    .badge::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: var(--orange);
-      border-radius: 50%;
-      animation: pulse 2s ease infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.2); }
-    }
-
-    h1 {
-      font-size: 56px;
+    .logo {
+      font-size: 24px;
       font-weight: 900;
-      margin-bottom: 24px;
-      letter-spacing: -2px;
-      background: linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--white);
+      text-decoration: none;
     }
 
-    p {
-      font-size: 18px;
-      color: var(--gray);
-      line-height: 1.7;
-      margin-bottom: 48px;
+    .logo span {
+      color: var(--orange);
+    }
+
+    .nav-cta {
+      padding: 12px 28px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      background: var(--white);
+      color: var(--navy);
+      transform: scale(1.05);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .back-btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 18px 40px;
-      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
-      border: none;
-      border-radius: 50px;
-      color: var(--white);
-      font-family: 'Lato', sans-serif;
-      font-size: 16px;
+      gap: 8px;
+      padding: 10px 20px;
+      color: var(--gray);
+      font-size: 14px;
       font-weight: 600;
-      cursor: pointer;
       text-decoration: none;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 30px;
+      transition: all 0.3s ease;
     }
 
     .back-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 20px 60px var(--orange-glow);
+      color: var(--white);
+      background: rgba(255,255,255,0.1);
     }
 
     .back-btn svg {
-      width: 20px;
-      height: 20px;
-      transform: rotate(180deg);
+      width: 18px;
+      height: 18px;
     }
 
     /* Background orbs */
@@ -125,7 +117,7 @@
       filter: blur(100px);
       opacity: 0.4;
       pointer-events: none;
-      z-index: -1;
+      z-index: 0;
     }
 
     .orb-1 {
@@ -143,22 +135,1061 @@
       bottom: -200px;
       left: -200px;
     }
+
+    /* Main Content */
+    .main {
+      padding: 110px 48px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(242, 106, 62, 0.1);
+      border: 1px solid rgba(242, 106, 62, 0.3);
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 900;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .header p {
+      font-size: 16px;
+      color: var(--gray);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Calculator Layout */
+    .calculator {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Input Panel */
+    .input-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 24px;
+    }
+
+    .input-panel h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .input-panel .subtitle {
+      font-size: 13px;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 14px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 20px var(--orange-glow);
+    }
+
+    .input-group input::placeholder {
+      color: rgba(255,255,255,0.3);
+      font-weight: 400;
+    }
+
+    .input-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238888a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px;
+    }
+
+    .input-group select option {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 18px 0;
+    }
+
+    .compare-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    /* Chart Panel */
+    .chart-panel {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 32px;
+      padding: 48px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .chart-header h2 {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .legend {
+      display: flex;
+      gap: 24px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.you {
+      background: var(--orange);
+      box-shadow: 0 0 10px var(--orange-glow);
+    }
+
+    .legend-dot.industry {
+      background: var(--purple);
+      box-shadow: 0 0 10px var(--purple-glow);
+    }
+
+    /* Spider Chart */
+    .spider-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 500px;
+    }
+
+    .spider-chart {
+      width: 100%;
+      max-width: 500px;
+      aspect-ratio: 1;
+    }
+
+    .spider-chart .grid-line {
+      fill: none;
+      stroke: rgba(255,255,255,0.1);
+      stroke-width: 1;
+    }
+
+    .spider-chart .axis-line {
+      stroke: rgba(255,255,255,0.15);
+      stroke-width: 1;
+    }
+
+    .spider-chart .axis-label {
+      fill: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+
+    .spider-chart .axis-value {
+      fill: rgba(255,255,255,0.5);
+      font-size: 9px;
+      text-anchor: middle;
+    }
+
+    .spider-chart .axis-scale {
+      fill: rgba(255,255,255,0.35);
+      font-size: 8px;
+    }
+
+    .spider-chart .data-area-industry {
+      fill: rgba(107, 76, 154, 0.2);
+      stroke: var(--purple);
+      stroke-width: 2;
+      transition: all 0.5s ease;
+    }
+
+    .spider-chart .data-area-you {
+      fill: rgba(242, 106, 62, 0.25);
+      stroke: var(--orange);
+      stroke-width: 3;
+      transition: all 0.5s ease;
+    }
+
+    .spider-chart .data-point {
+      fill: var(--orange);
+      stroke: var(--white);
+      stroke-width: 2;
+      transition: all 0.3s ease;
+    }
+
+    .spider-chart .data-point:hover {
+      r: 8;
+      filter: drop-shadow(0 0 10px var(--orange));
+    }
+
+    .spider-chart .data-point-industry {
+      fill: var(--purple);
+      stroke: var(--white);
+      stroke-width: 2;
+    }
+
+    /* Score Cards */
+    .score-cards {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .score-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .score-card:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-4px);
+    }
+
+    .score-card .metric-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .score-card .scores {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .score-card .your-score {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--orange);
+    }
+
+    .score-card .industry-score {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray);
+    }
+
+    .score-card .diff {
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+
+    .score-card .diff.positive {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+    }
+
+    .score-card .diff.negative {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+
+    .score-card .diff.neutral {
+      background: rgba(255,255,255,0.1);
+      color: var(--gray);
+    }
+
+    /* Insights Section */
+    .insights-section {
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: none;
+    }
+
+    .insights-section.visible {
+      display: block;
+    }
+
+    .insights-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .insights-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .insights-icon.top-performer {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .insights-icon.middle-pack {
+      background: linear-gradient(135deg, rgba(242, 106, 62, 0.2), rgba(107, 76, 154, 0.1));
+      border: 1px solid rgba(242, 106, 62, 0.3);
+    }
+
+    .insights-icon.needs-improvement {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .insights-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .insights-title.top-performer { color: var(--green); }
+    .insights-title.middle-pack { color: var(--orange); }
+    .insights-title.needs-improvement { color: var(--red); }
+
+    .insights-subtitle {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .insights-content {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .insights-content p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 16px;
+    }
+
+    .insights-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .insights-content strong {
+      color: var(--white);
+    }
+
+    .insights-metrics {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .insight-metric-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .insight-metric-tag.strength {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .insight-metric-tag.opportunity {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .insights-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, rgba(242, 106, 62, 0.1), rgba(107, 76, 154, 0.1));
+      border: 1px solid rgba(242, 106, 62, 0.2);
+      border-radius: 20px;
+      padding: 24px 28px;
+    }
+
+    .insights-cta-text h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .insights-cta-text p {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .insights-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--purple) 100%);
+      border: none;
+      border-radius: 30px;
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+
+    .insights-cta-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px var(--orange-glow);
+    }
+
+    .insights-cta-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .calculator {
+        grid-template-columns: 1fr;
+      }
+
+      .input-panel {
+        position: relative;
+        top: 0;
+      }
+
+      .score-cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .main {
+        padding: 120px 24px 60px;
+      }
+
+      .nav {
+        padding: 16px 24px;
+      }
+
+      .chart-panel {
+        padding: 24px;
+      }
+
+      .score-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .chart-header {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .insights-cta {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
 
-  <div class="container">
-    <div class="badge">Coming Soon</div>
-    <h1>Benchmark Calculator</h1>
-    <p>We're building something powerful. Our advanced benchmark calculator will help you dive deeper into your metrics and get personalized insights.</p>
-    <a href="index.html" class="back-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14M12 5l7 7-7 7"/>
-      </svg>
-      Back to Benchmarks
-    </a>
-  </div>
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="logo">amplif<span>AI</span></a>
+    <div class="nav-right">
+      <a href="index.html" class="back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Benchmarks
+      </a>
+      <a href="https://www.amplifai.com/schedule-demo" target="_blank" class="nav-cta">Book a Demo</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="header">
+      <div class="badge">Interactive Tool</div>
+      <h1>Benchmark Calculator</h1>
+      <p>Enter your metrics and see how you compare against industry benchmarks</p>
+    </div>
+
+    <div class="calculator">
+      <!-- Input Panel -->
+      <div class="input-panel">
+        <h2>Your Metrics</h2>
+        <p class="subtitle">Enter your scores below</p>
+
+        <div class="input-group">
+          <label>QA Score</label>
+          <input type="number" id="qa-input" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateChart()">
+        </div>
+
+        <div class="input-group">
+          <label>CSAT</label>
+          <input type="number" id="csat-input" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateChart()">
+        </div>
+
+        <div class="input-group">
+          <label>NPS</label>
+          <input type="number" id="nps-input" placeholder="-100 to 100" min="-100" max="100" step="0.1" oninput="updateChart()">
+        </div>
+
+        <div class="input-group">
+          <label>FCR</label>
+          <input type="number" id="fcr-input" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateChart()">
+        </div>
+
+        <div class="input-group">
+          <label>Transfer Rate</label>
+          <input type="number" id="transfer-input" placeholder="0-100" min="0" max="100" step="0.1" oninput="updateChart()">
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="compare-label">Compare Against</div>
+        <div class="input-group">
+          <select id="industry-select" onchange="updateChart()">
+            <option value="all">All Industries Average</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="financial">Financial Services</option>
+            <option value="retail">Retail</option>
+            <option value="tech">Tech & Telecom</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Chart Panel -->
+      <div class="chart-panel">
+        <div class="chart-header">
+          <h2>Performance Comparison</h2>
+          <div class="legend">
+            <div class="legend-item">
+              <div class="legend-dot you"></div>
+              <span>Your Scores</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot industry"></div>
+              <span>Industry Avg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="spider-container">
+          <svg class="spider-chart" viewBox="0 0 450 420" id="spider-chart">
+            <!-- Grid will be drawn by JS -->
+          </svg>
+        </div>
+
+        <div class="score-cards" id="score-cards">
+          <!-- Score cards will be generated by JS -->
+        </div>
+
+        <!-- Insights Section -->
+        <div class="insights-section" id="insights-section">
+          <div class="insights-header">
+            <div class="insights-icon" id="insights-icon"></div>
+            <div>
+              <div class="insights-title" id="insights-title"></div>
+              <div class="insights-subtitle" id="insights-subtitle"></div>
+            </div>
+          </div>
+          <div class="insights-content" id="insights-content">
+            <!-- Dynamic content -->
+          </div>
+          <div class="insights-cta">
+            <div class="insights-cta-text">
+              <h4>Ready to level up your team?</h4>
+              <p>See how AmplifAI's coaching platform can help you hit your goals.</p>
+            </div>
+            <a href="https://www.amplifai.com/schedule-demo" target="_blank" class="insights-cta-btn">
+              Book a Demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Industry benchmark data
+    const industryData = {
+      all: { qa: 84.3, csat: 78.7, nps: 53.6, fcr: 72.8, transfer: 14.5 },
+      healthcare: { qa: 93.3, csat: 83.1, nps: 72.1, fcr: 66.4, transfer: 10.9 },
+      financial: { qa: 86.1, csat: 65.4, nps: 42.3, fcr: 72.7, transfer: 11.4 },
+      retail: { qa: 82.7, csat: 75.8, nps: 52.3, fcr: 76.5, transfer: 22.5 },
+      tech: { qa: 75.2, csat: 90.3, nps: 47.7, fcr: 75.5, transfer: 13.1 }
+    };
+
+    const metrics = ['QA Score', 'CSAT', 'NPS', 'FCR', 'Transfer Rate'];
+    const metricKeys = ['qa', 'csat', 'nps', 'fcr', 'transfer'];
+
+    // Chart configuration
+    const centerX = 225;
+    const centerY = 210;
+    const maxRadius = 140;
+    const levels = 5;
+
+    function getPointOnCircle(angle, radius) {
+      // Adjust angle so first point is at top
+      const adjustedAngle = angle - Math.PI / 2;
+      return {
+        x: centerX + radius * Math.cos(adjustedAngle),
+        y: centerY + radius * Math.sin(adjustedAngle)
+      };
+    }
+
+    function normalizeValue(value, key) {
+      if (value === null) return null;
+      if (key === 'nps') {
+        // NPS: -100 to 100 -> 0 to 100
+        return (value + 100) / 2;
+      }
+      if (key === 'transfer') {
+        // Transfer: lower is better, invert (assuming max 50%)
+        return Math.max(0, 100 - (value * 2));
+      }
+      return value;
+    }
+
+    function drawSpiderChart() {
+      const svg = document.getElementById('spider-chart');
+      const angleStep = (2 * Math.PI) / metrics.length;
+
+      let html = '';
+
+      // Draw grid circles
+      for (let level = 1; level <= levels; level++) {
+        const radius = (maxRadius / levels) * level;
+        let points = [];
+        for (let i = 0; i < metrics.length; i++) {
+          const angle = angleStep * i;
+          const point = getPointOnCircle(angle, radius);
+          points.push(`${point.x},${point.y}`);
+        }
+        html += `<polygon class="grid-line" points="${points.join(' ')}" />`;
+      }
+
+      // Draw axis lines, labels, and scale numbers
+      for (let i = 0; i < metrics.length; i++) {
+        const angle = angleStep * i;
+        const endPoint = getPointOnCircle(angle, maxRadius);
+        const labelPoint = getPointOnCircle(angle, maxRadius + 25);
+        const isTransfer = metricKeys[i] === 'transfer';
+
+        html += `<line class="axis-line" x1="${centerX}" y1="${centerY}" x2="${endPoint.x}" y2="${endPoint.y}" />`;
+
+        // Adjust label position for better readability
+        let textAnchor = 'middle';
+        let dx = 0;
+        let dy = 0;
+        if (labelPoint.x < centerX - 10) {
+          textAnchor = 'end';
+          dx = -5;
+        } else if (labelPoint.x > centerX + 10) {
+          textAnchor = 'start';
+          dx = 5;
+        }
+        // Move bottom labels down a bit more
+        if (labelPoint.y > centerY + 50) {
+          dy = 10;
+        }
+
+        html += `<text class="axis-label" x="${labelPoint.x + dx}" y="${labelPoint.y + dy}" text-anchor="${textAnchor}" dominant-baseline="middle">${metrics[i]}</text>`;
+      }
+
+      svg.innerHTML = html;
+      updateChart();
+    }
+
+    function updateChart() {
+      const svg = document.getElementById('spider-chart');
+      const industry = document.getElementById('industry-select').value;
+      const industryValues = industryData[industry];
+
+      // Get user values (null if empty, not 0)
+      const qaVal = document.getElementById('qa-input').value;
+      const csatVal = document.getElementById('csat-input').value;
+      const npsVal = document.getElementById('nps-input').value;
+      const fcrVal = document.getElementById('fcr-input').value;
+      const transferVal = document.getElementById('transfer-input').value;
+
+      const userValues = {
+        qa: qaVal !== '' ? parseFloat(qaVal) : null,
+        csat: csatVal !== '' ? parseFloat(csatVal) : null,
+        nps: npsVal !== '' ? parseFloat(npsVal) : null,
+        fcr: fcrVal !== '' ? parseFloat(fcrVal) : null,
+        transfer: transferVal !== '' ? parseFloat(transferVal) : null
+      };
+
+      // Save to localStorage for persistence
+      localStorage.setItem('userMetrics', JSON.stringify(userValues));
+
+      // Check if user has entered any data
+      const hasUserData = Object.values(userValues).some(v => v !== null);
+
+      // Update legend visibility
+      const yourScoresLegend = document.querySelector('.legend-item:first-child');
+      yourScoresLegend.style.display = hasUserData ? 'flex' : 'none';
+
+      const angleStep = (2 * Math.PI) / metrics.length;
+
+      // Remove old data areas
+      svg.querySelectorAll('.data-area-industry, .data-area-you, .data-point, .data-point-industry').forEach(el => el.remove());
+
+      // Calculate industry points
+      let industryPoints = [];
+      for (let i = 0; i < metricKeys.length; i++) {
+        const key = metricKeys[i];
+        const value = normalizeValue(industryValues[key], key);
+        const radius = (value / 100) * maxRadius;
+        const angle = angleStep * i;
+        const point = getPointOnCircle(angle, radius);
+        industryPoints.push(`${point.x},${point.y}`);
+      }
+
+      // Draw industry area
+      const industryArea = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      industryArea.setAttribute('class', 'data-area-industry');
+      industryArea.setAttribute('points', industryPoints.join(' '));
+      svg.appendChild(industryArea);
+
+      // Only draw user data if they have entered values
+      if (hasUserData) {
+        // Calculate user points
+        let userPoints = [];
+        let userPointCoords = [];
+        for (let i = 0; i < metricKeys.length; i++) {
+          const key = metricKeys[i];
+          const rawValue = userValues[key];
+          // Use 0 for null values so polygon stays connected, but don't draw points for them
+          const value = rawValue !== null ? normalizeValue(rawValue, key) : 0;
+          const radius = (value / 100) * maxRadius;
+          const angle = angleStep * i;
+          const point = getPointOnCircle(angle, radius);
+          userPoints.push(`${point.x},${point.y}`);
+          userPointCoords.push({ ...point, hasValue: rawValue !== null });
+        }
+
+        // Draw user area
+        const userArea = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        userArea.setAttribute('class', 'data-area-you');
+        userArea.setAttribute('points', userPoints.join(' '));
+        svg.appendChild(userArea);
+
+        // Draw user data points only for values that exist
+        userPointCoords.forEach((point, i) => {
+          if (point.hasValue) {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('class', 'data-point');
+            circle.setAttribute('cx', point.x);
+            circle.setAttribute('cy', point.y);
+            circle.setAttribute('r', 6);
+            svg.appendChild(circle);
+          }
+        });
+      }
+
+      // Update score cards
+      updateScoreCards(userValues, industryValues);
+    }
+
+    function updateScoreCards(userValues, industryValues) {
+      const container = document.getElementById('score-cards');
+      let html = '';
+
+      metricKeys.forEach((key, i) => {
+        const userVal = userValues[key];
+        const indVal = industryValues[key];
+        let diff, diffClass, diffText;
+
+        if (key === 'transfer') {
+          // Lower is better for transfer rate
+          diff = indVal - userVal;
+          diffClass = diff > 0 ? 'positive' : diff < 0 ? 'negative' : 'neutral';
+          diffText = diff > 0 ? `${diff.toFixed(1)}% better` : diff < 0 ? `${Math.abs(diff).toFixed(1)}% worse` : 'Same';
+        } else {
+          diff = userVal - indVal;
+          diffClass = diff > 0 ? 'positive' : diff < 0 ? 'negative' : 'neutral';
+          diffText = diff > 0 ? `+${diff.toFixed(1)} above` : diff < 0 ? `${diff.toFixed(1)} below` : 'Same';
+        }
+
+        if (userVal === null || userVal === 0) {
+          diffClass = 'neutral';
+          diffText = 'No data';
+        }
+
+        const displayUserVal = userVal !== null ? userVal : '--';
+        const suffix = key === 'transfer' ? '%' : '';
+
+        html += `
+          <div class="score-card">
+            <div class="metric-name">${metrics[i]}</div>
+            <div class="scores">
+              <span class="your-score">${displayUserVal}${userVal ? suffix : ''}</span>
+              <span class="industry-score">vs ${indVal}${suffix}</span>
+            </div>
+            <div class="diff ${diffClass}">${diffText}</div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+
+      // Update insights section
+      updateInsights(userValues, industryValues);
+    }
+
+    function updateInsights(userValues, industryValues) {
+      const section = document.getElementById('insights-section');
+      const icon = document.getElementById('insights-icon');
+      const title = document.getElementById('insights-title');
+      const subtitle = document.getElementById('insights-subtitle');
+      const content = document.getElementById('insights-content');
+
+      // Check if user has entered any data
+      const hasData = Object.values(userValues).some(v => v !== null && v !== 0);
+      if (!hasData) {
+        section.classList.remove('visible');
+        return;
+      }
+
+      section.classList.add('visible');
+
+      // Calculate performance for each metric
+      const performance = {};
+      let strengths = [];
+      let opportunities = [];
+      let totalDiff = 0;
+      let metricsWithData = 0;
+
+      metricKeys.forEach((key, i) => {
+        if (userValues[key] !== null && userValues[key] !== 0) {
+          metricsWithData++;
+          let diff;
+          if (key === 'transfer') {
+            diff = industryValues[key] - userValues[key]; // Lower is better
+          } else {
+            diff = userValues[key] - industryValues[key];
+          }
+          performance[key] = diff;
+          totalDiff += diff;
+
+          if (diff > 5) {
+            strengths.push({ key, name: metrics[i], diff });
+          } else if (diff < -5) {
+            opportunities.push({ key, name: metrics[i], diff: Math.abs(diff) });
+          }
+        }
+      });
+
+      const avgDiff = metricsWithData > 0 ? totalDiff / metricsWithData : 0;
+
+      // Determine performance tier
+      let tier, emoji, titleText, subtitleText, mainContent, ctaText;
+
+      if (avgDiff > 8) {
+        tier = 'top-performer';
+        emoji = '🏆';
+        titleText = 'Top Performer';
+        subtitleText = 'You\'re outperforming the industry';
+        mainContent = `
+          <p><strong>Congratulations!</strong> Your metrics show you're leading the pack. Your team is delivering exceptional results that put you ahead of industry benchmarks.</p>
+          <p>The key now is <strong>sustainability</strong>. Top performers often face the challenge of maintaining excellence while scaling. Focus on documenting what's working, building repeatable processes, and developing your team's capabilities to ensure consistent performance.</p>
+          <p>Consider using data-driven coaching to identify your top performers' behaviors and replicate them across your entire team.</p>
+        `;
+        ctaText = 'See how AmplifAI helps top teams stay ahead of the curve.';
+      } else if (avgDiff > 0) {
+        tier = 'middle-pack';
+        emoji = '📈';
+        titleText = 'Above Average';
+        subtitleText = 'You\'re ahead, with room to grow';
+        mainContent = `
+          <p><strong>You're on the right track.</strong> Your metrics show you're performing above industry average, which means your foundation is solid.</p>
+          <p>The opportunity now is to <strong>push into the top tier</strong>. Small, targeted improvements in your weaker areas can have an outsized impact. Focus on turning your good metrics into great ones through consistent coaching and feedback loops.</p>
+          <p>Data shows that teams who implement structured coaching programs see an average 15-20% improvement in their lagging metrics within 90 days.</p>
+        `;
+        ctaText = 'See how AmplifAI accelerates your path to top performance.';
+      } else if (avgDiff > -8) {
+        tier = 'middle-pack';
+        emoji = '🎯';
+        titleText = 'Room to Grow';
+        subtitleText = 'You\'re close to industry average';
+        mainContent = `
+          <p><strong>You're in striking distance.</strong> Your metrics are near industry benchmarks, which means you have a solid foundation to build on.</p>
+          <p>The key is <strong>targeted improvement</strong>. Rather than trying to fix everything at once, focus on one or two metrics where small gains will have the biggest impact. Often, improving FCR has a ripple effect on CSAT and Transfer Rate.</p>
+          <p>Teams at this stage benefit most from real-time coaching and performance visibility—giving agents immediate feedback when it matters most.</p>
+        `;
+        ctaText = 'See how AmplifAI helps teams close the gap to top performance.';
+      } else {
+        tier = 'needs-improvement';
+        emoji = '🚀';
+        titleText = 'Opportunity Ahead';
+        subtitleText = 'Significant room for improvement';
+        mainContent = `
+          <p><strong>Every top performer started somewhere.</strong> The gap between your current metrics and industry benchmarks represents a significant opportunity for improvement—and ROI.</p>
+          <p>The good news? Teams with the biggest gaps often see the <strong>fastest improvements</strong> when they implement the right systems. Start with the fundamentals: clear expectations, consistent feedback, and visibility into daily performance.</p>
+          <p>Research shows that teams who adopt coaching-focused performance management see 2-3x faster improvement than those relying on traditional methods.</p>
+        `;
+        ctaText = 'See how AmplifAI helps teams transform their performance.';
+      }
+
+      // Build metric tags
+      let tagsHtml = '';
+      if (strengths.length > 0) {
+        strengths.slice(0, 3).forEach(s => {
+          tagsHtml += `<span class="insight-metric-tag strength">✓ ${s.name} (+${s.diff.toFixed(1)})</span>`;
+        });
+      }
+      if (opportunities.length > 0) {
+        opportunities.slice(0, 3).forEach(o => {
+          tagsHtml += `<span class="insight-metric-tag opportunity">↑ ${o.name} (-${o.diff.toFixed(1)})</span>`;
+        });
+      }
+
+      if (tagsHtml) {
+        mainContent += `<div class="insights-metrics">${tagsHtml}</div>`;
+      }
+
+      // Update DOM
+      icon.className = `insights-icon ${tier}`;
+      icon.textContent = emoji;
+      title.className = `insights-title ${tier}`;
+      title.textContent = titleText;
+      subtitle.textContent = subtitleText;
+      content.innerHTML = mainContent;
+
+      // Update CTA text
+      document.querySelector('.insights-cta-text p').textContent = ctaText;
+    }
+
+    // Load saved metrics from localStorage
+    function loadSavedMetrics() {
+      const saved = localStorage.getItem('userMetrics');
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          if (data.qa !== null && data.qa !== 0) document.getElementById('qa-input').value = data.qa;
+          if (data.csat !== null && data.csat !== 0) document.getElementById('csat-input').value = data.csat;
+          if (data.nps !== null && data.nps !== 0) document.getElementById('nps-input').value = data.nps;
+          if (data.fcr !== null && data.fcr !== 0) document.getElementById('fcr-input').value = data.fcr;
+          if (data.transfer !== null && data.transfer !== 0) document.getElementById('transfer-input').value = data.transfer;
+        } catch (e) {
+          console.log('Could not load saved metrics');
+        }
+      }
+    }
+
+    // Initialize
+    loadSavedMetrics();
+    drawSpiderChart();
+  </script>
 </body>
 </html>
